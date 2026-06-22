@@ -1,61 +1,46 @@
-<div id="container" class="py-20 text-center">
+<div id="container" class="py-16 md:py-28 text-center px-4">
   <main>
-    <section id="hero" class="max-w-2xl mx-auto px-4">
+    <section id="hero" class="max-w-3xl mx-auto">
       
-      <svg class="absolute w-0 h-0 opacity-0 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-        <filter id="white-outline">
-          <feMorphology operator="dilate" radius="1" in="SourceAlpha" result="dilated" />
-          <feFlood flood-color="#ffffff" style="flood-color:#ffffff;" flood-opacity="0.7" result="flooded" />
-          <feComposite in="flooded" in2="dilated" operator="in" result="outline" />
-          <feMerge>
-            <feMergeNode in="outline" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </svg>
-
-      <svg class="absolute w-0 h-0 opacity-0 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-        <filter id="orange-outline">
-          <feMorphology operator="dilate" radius="1" in="SourceAlpha" result="dilated" />
-          <feFlood flood-color="#D9744B" style="flood-color:#D9744B;" flood-opacity="0.4" result="flooded" />
-          <feComposite in="flooded" in2="dilated" operator="in" result="outline" />
-          <feMerge>
-            <feMergeNode in="outline" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </svg>
-
-      <div>
-        <div class="text-5xl font-extrabold tracking-tight mb-4 
-        custom-outline text-[#D9744B]">
-          <h1>
-            QUALITY LANDSCAPE
-          </h1>
-          <h1 class="text-[#539244]">
-            AND 
-          </h1>
-          <h1>
-            LEISURE
-          </h1>
-        </div>
+      <!-- Premium Glass Backing Panel for Flawless Readability over Background Images -->
+      <div class="bg-[#D1D5BE]/40 rounded-3xl p-8 md:p-14 shadow-xl border border-white/40 max-w-2xl mx-auto">
         
-        <p class="text-2xl text-white mb-8 orange-custom-outline">
+        <!-- Main SEO Heading -->
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-none mb-6">
+          <span class="block text-[#D9744B] drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">
+            QUALITY LANDSCAPE
+          </span>
+          <span class="block text-sm md:text-lg font-bold text-[#2F4340] tracking-[0.3em] my-2 uppercase opacity-80">
+            — and —
+          </span>
+          <span class="block text-[#D9744B] drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)]">
+            LEISURE
+          </span>
+        </h1>
+        
+        <!-- Subtitle Descriptor -->
+        <p class="text-xl md:text-2xl font-bold text-[#2F4340] tracking-wide mb-8 drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
           Transform your outdoor space.
         </p>
+
+        <!-- Dynamic Call to Actions -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a 
+            href="/services" 
+            class="w-full sm:w-auto bg-[#2F4340] text-white font-bold px-8 py-3.5 rounded-xl shadow-md hover:bg-[#539244] transition-colors duration-200 text-base"
+          >
+            Our Services
+          </a>
+          <a 
+            href="/contact" 
+            class="w-full sm:w-auto bg-white/80 backdrop-blur-sm text-[#2F4340] border border-slate-200 font-bold px-8 py-3.5 rounded-xl shadow-sm hover:bg-white transition-colors duration-200 text-base"
+          >
+            Get a Quote
+          </a>
+        </div>
+
       </div>
       
     </section>
   </main>
 </div>
-
-<style>
-  /* The filter handles the outline, while Tailwind handles the text fill */
-  .custom-outline {
-    filter: url(#white-outline);
-  }
-
-  .orange-custom-outline {
-    filter: url(#orange-outline);
-  }
-</style>

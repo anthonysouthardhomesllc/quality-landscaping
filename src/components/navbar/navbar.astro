@@ -1,0 +1,132 @@
+---
+import Container from "@components/container.astro";
+import Link from "@components/ui/link.astro";
+import Dropdown from "./dropdown.astro";
+import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+import { Icon } from 'astro-icon/components';
+
+const menuitems = [
+  {
+    title: "Services",
+    path: "#",
+    children: [
+      { title: "Landscaping", path: "#L"}, //TODO
+      { title: "Other", path: "#O" }, //TODO
+    ],
+  },
+  {
+    title: "About Us",
+    path: "/about/",
+  }
+];
+---
+
+<div class="w-full bg-gray-700">
+  <Container>
+    <header class="flex flex-col lg:flex-row justify-between items-center py-2">
+      <Astronav>
+        <!-- Logo and Mobile Toggle Row -->
+        <div class="flex w-full lg:w-auto items-center justify-between px-4 lg:px-0">
+          <a href="/" class="flex items-center hover:scale-110 duration-500" id="logo-link">
+            <img 
+              class="h-32 w-auto object-contain brightness-115" 
+              src="/logo.png" 
+              aria-label="Quality Landscaping LLC" 
+              alt="Quality Landscaping LLC" 
+              id="logo"
+            />
+          </a>
+          <div class="block lg:hidden">
+            <MenuIcon class="w-8 h-8 text-white hover:text-[#ffca28] transition-colors" />
+          </div>
+        </div>
+        
+        <!-- Collapsible Navigation Area -->
+        <MenuItems class="hidden lg:flex lg:items-center w-full lg:w-auto mt-4 lg:mt-0 pb-4 lg:pb-0">
+          <ul class="flex flex-col lg:flex-row lg:items-center gap-2 lg:gap-6 px-4 lg:px-0">
+            {
+              menuitems.map((item, index) => (
+                <>
+                  {item.children && (
+                    <Dropdown
+                      title={item.title}
+                      children={item.children}
+                      lastItem={index === menuitems.length - 1}
+                    />
+                  )}
+
+                  {!item.children && (
+                    <li>
+                      <a
+                        href={item.path}
+                        class="flex py-2 items-center text-white hover:text-[#ffca28] font-medium transition-colors"
+                      >
+                        <span>{item.title}</span>
+                      </a>
+                    </li>
+                  )}
+                </>
+              ))
+            }
+          </ul>
+          
+          <!-- Mobile Specific Actions Panel -->
+          <div class="lg:hidden flex flex-col items-left mt-2 gap-4 px-4">
+            <Link id="contact-mobile" href="/contact/" size="md" block>Contact Us</Link>
+          </div>
+        </MenuItems>
+          
+      </Astronav>
+      
+      <!-- Desktop Specific Actions Panel -->
+      <div class="hidden lg:flex items-center gap-6 text-white">
+        <div class="flex items-center gap-4 text-xl">
+          <a href="https://www.facebook.com/p/Southard-Homes-LLC-61564654631774/" class="hover:text-[#ffca28] transition-colors" aria-label="Facebook">
+            <Icon name="simple-icons:facebook" />
+          </a>
+          <a href="https://www.instagram.com/southardhomes.llc/" class="hover:text-[#ffca28] transition-colors" aria-label="Instagram">
+            <Icon name="simple-icons:instagram" />
+          </a>
+          <a href="https://www.tiktok.com/@southardhomesllc/" class="hover:text-[#ffca28] transition-colors" aria-label="TikTok">
+            <Icon name="simple-icons:tiktok" />
+          </a>
+        </div>
+        <Link id="contact-desktop" href="/contact/" size="lg">Contact Us</Link>
+      </div>
+    </header>
+  </Container>
+</div>
+
+<style>
+  /* Desktop Button Default Styles */
+  #contact-desktop {
+    color: #ffffff;
+    border: 2px solid #ffffff !important;
+    transition: all 0.3s ease;
+  }
+
+  #contact-desktop:hover {
+    font-size: large;
+    border-color: #ffca28 !important;
+    color: #ffca28;
+  }
+
+  /* Mobile Button Styles */
+  #contact-mobile {
+    border: 2px solid #ffffff !important;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 8em;
+  }
+
+  #contact-mobile:hover {
+    font-size: large;
+    border-color: #ffca28 !important;
+    color: #ffca28;
+  }
+
+  #logo-link:hover #logo {
+    border-color: #ffca28;
+    border-width: 2px;
+  }
+</style>

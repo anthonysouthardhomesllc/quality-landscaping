@@ -1,23 +1,66 @@
+---
+import { SEO } from "astro-seo";
+import Footer from "@components/footer.astro";
+import Navbar from "@components/navbar/navbar.astro";
+import background from '../assets/background.svg'; 
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Quality Landscaping LLC provides premium residential and commercial landscaping, lawn care, and hardscaping services across Terre Haute and the Wabash Valley." } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const resolvedImageWithDomain = new URL("/opengraph.jpg", Astro.site).toString();
+
+const makeTitle = title
+  ? `${title} | Quality Landscaping LLC`
+  : "Quality Landscaping LLC | Landscaping Services in Terre Haute, Indiana"; 
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    <SEO
+      title={makeTitle}
+      description={description}
+      canonical={canonicalURL}
+      twitter={{ 
+        creator: "@qualitylandscapingllc",
+        site: "",
+        card: "summary_large_image",
+      }}
+      openGraph={{
+        basic: {
+          url: canonicalURL,
+          type: "website",
+          title: makeTitle,
+          image: resolvedImageWithDomain,
+        },
+        image: {
+          alt: "Quality Landscaping LLC - Terre Haute, IN",
+        },
+      }}
+    />
+  </head>
+
+  <body 
+    class="flex flex-col min-h-screen bg-fixed bg-center bg-cover bg-no-repeat" 
+    style={`background-image: url('${background.src}');`}
+  >
+    <Navbar />
+    
+    <main class="grow">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

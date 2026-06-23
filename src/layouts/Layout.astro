@@ -3,6 +3,7 @@
 //Core layout wrapper handling site SEO, global styles, and shared shell components (Navbar/Footer)
 
 import { SEO } from "astro-seo";
+import { Image } from 'astro:assets';
 import FooterContent from "@components/footer.astro";
 import Navbar from "@components/navbar/navbar.astro";
 import background from "@assets/background.webp"; 
@@ -72,11 +73,17 @@ const makeTitle = title
     
     <!-- Visual Enhancements: Global Full-Bleed Fixed Background -->
     <!-- Performance Optimization: content-visibility updates rendering performance during glassmorphism scrolling -->
-    <div 
-      class="fixed inset-0 pointer-events-none 
-      bg-fixed bg-center bg-cover bg-no-repeat blur-[0px] scale-105 z-0"
-      style={`background-image: url('${background.src}'); content-visibility: auto;`}
-    ></div>
+    <div class="fixed inset-0 pointer-events-none overflow-hidden scale-105 z-0" style="content-visibility: auto;">
+      <Image 
+        src={background} 
+        alt="Quality Landscape project background showcasing stone and turf integration" 
+        widths={[640, 1200, 1920]} 
+        sizes="100vw"
+        class="w-full h-full object-cover select-none pointer-events-none"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
 
     <!-- UI Composition Container (Keeps footer pinned cleanly on shorter pages) -->
     <div class="relative z-10 flex flex-col min-h-screen grow">

@@ -67,8 +67,10 @@ const jsonLdSchema = JSON.stringify({
         <!-- Cross-Domain Authority List: Boosts crawling visibility across corporate digital footprints -->
         <nav class="border-l-2 border-white/60 pl-4 py-1 w-full" aria-label="Our Sister Companies">
           <ul class="flex flex-col space-y-2 text-lg font-bold text-[#2F4340]/90 tracking-wide">
-            <li class="text-white drop-shadow-sm font-extrabold" aria-current="page">
-              Landscape & Leisure
+            <li>
+              <a href="/" aria-label="Quality Landscape and Leisure Homepage"
+                class="hover:text-[#D9744B] transition-colors block font-extrabold">Landscape & Leisure
+              </a>
             </li>
             <li>
               <a href="https://qualityelectricofindiana.com/" aria-label="Quality Electric of Indiana" 
@@ -190,7 +192,7 @@ const jsonLdSchema = JSON.stringify({
   <p class="text-gray-600 flex items-center pt-4 justify-center text-xs font-semibold">
     Website by 
     <img 
-      class="pl-1.5 h-4 inline-block drop-shadow-sm filter brightness-95" 
+      class="w-37 pl-1.5 h-4 inline-block drop-shadow-sm filter brightness-95" 
       alt="Monarch Media LLC corporate service badge" 
       src={monarchLogo.src}
     />

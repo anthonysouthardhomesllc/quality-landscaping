@@ -1,4 +1,5 @@
 ---
+//src/pages/services.astro
 import Layout from '../layouts/Layout.astro';
 import '../styles/global.css';
 import Container from "@components/container.astro";
@@ -6,43 +7,72 @@ import Container from "@components/container.astro";
 const treatmentServices = [
   { 
     title: "Lawn Care Program", 
-    desc: "1-5 Rounds of fertilization, pre/post emergent weed control, turf pest and disease management, and aeration."
+    desc: "Comprehensive 1-5 round seasonal fertilization plans, pre-emergent and post-emergent weed control, turf disease management, pest control, and core aeration."
   },
   { 
-    title: "Emerald Ash Bore", 
-    desc: "Targeted April-August soil drench application of insecticide to ash trees to control Emerald Ash Bore."
+    title: "Emerald Ash Borer Treatment", 
+    desc: "Targeted April-August soil drench insecticide applications to protect vulnerable ash trees and control destructive Emerald Ash Bore infestations."
   },
   { 
-    title: "Summer Spray", 
-    desc: "Early June-September spray application of insecticide for control of mites, bagworms, and other summertime unwanted insects of susceptible plant materials."
+    title: "Summer Spray Insect Control", 
+    desc: "Early June-September spray applications targeting mites, bagworms, and invasive summertime pests on susceptible trees, shrubs, and plant materials."
   },
   { 
     title: "Dormant Oil Application", 
-    desc: "Spring application of all-natural oil for the control of scale and other over-wintering insects and eggs of susceptible plant materials."
+    desc: "Early spring horticultural oil applications formulated for organic control of scale insects, overwintering pests, and insect eggs on landscaping plants."
   },
   { 
     title: "Spring Fungicide Spray", 
-    desc: "3x3 Spray application for control of leaf blight on flowering trees and shrubs."
+    desc: "Targeted 3x3 protective spray applications to prevent and control leaf blight and fungal diseases on flowering trees and landscape shrubs."
   },
   { 
-    title: "Irrigation Systems", 
-    desc: "Professional outdoor systems support handling activation, licensed annual backflow testing, and winterization/deactivation scripts."
+    title: "Irrigation System Support", 
+    desc: "Complete commercial and residential sprinkler services including spring activation, licensed annual backflow testing, repairs, and winterization blowouts."
   }
 ];
 
 const maintenanceService = {
-  title: "Landscape Maintenance", 
-  desc: "Comprehensive properties and seasonal upkeeps custom-tailored to protect and manage your outdoor installations through the year:",
+  title: "Seasonal Landscape Maintenance", 
+  desc: "Custom-tailored commercial and residential yard upkeep programs designed to preserve and clean your outdoor installations all year long:",
   details: [
-    "Early Spring Cut Back (February-April): Cutting back of overwintered ornamental grasses, liriope, butterfly bushes, hydrangeas, etc. throughout the landscape beds before new growth begins, removal of all debris.",
-    "Spring Clean Up (April-June): Prune as needed, thorough cleaning of landscape beds and outdoor area, edging beds, removal of debris, pre-emergent weed control, fertilization, and mulch.",
-    "Summer Pruning (July-September): Hand-prune of ornamental trees and shrubs to allow sunlight to reach the inner foliage and control size of plant.",
-    "Fall clean up (after most leaves are down): Cut back perennials, remove annuals located in and around your landscape beds, removal of all debris."
+    "Early Spring Cut Back (February-April): Cutting back of overwintered ornamental grasses, liriope, butterfly bushes, and hydrangeas across landscape beds before new growth begins, including thorough debris removal.",
+    "Spring Clean Up & Mulching (April-June): Structural pruning, deep landscape bed edging, debris removal, weed pre-emergent barriers, root fertilization, and premium mulch delivery and installation.",
+    "Summer Pruning (July-September): Specialized hand-pruning of ornamental trees and evergreen shrubs to maximize inner foliage sunlight and manage landscape density.",
+    "Fall Leaf Clean Up (Oct-Dec): Cutting back cold-sensitive perennials, pulling spent annual plants, clearing heavy leaf coverage, and prepping beds for winter."
   ]
 };
+
+//Target metadata for indexing optimization
+const pageTitle = "Lawn Care Programs & Landscape Maintenance | Terre Haute";
+const pageDescription = "Explore professional lawn care programs, irrigation system maintenance, and seasonal yard cleanups by Quality Landscape and Leisure across the Wabash Valley area.";
+
+//ItemList schema telling search crawlers exactly what services you offer explicitly
+const servicesSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Quality Landscape & Leisure Service Catalog",
+  "description": "Professional lawn treatment, plant health care, and yard maintenance programs in Indiana.",
+  "itemListElement": [
+    ...treatmentServices.map((s, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": s.title,
+      "description": s.desc
+    })),
+    {
+      "@type": "ListItem",
+      "position": treatmentServices.length + 1,
+      "name": maintenanceService.title,
+      "description": maintenanceService.desc
+    }
+  ]
+});
 ---
 
-<Layout title="Quality Landscape and Leisure Services">
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Injects structured index data directly into the head tracking element stream -->
+  <script is:inline type="application/ld+json" set:html={servicesSchema}></script>
+
   <div class="min-h-[75vh] flex items-center justify-center py-12">
     <Container>
 
@@ -51,7 +81,7 @@ const maintenanceService = {
         class="max-w-7xl mx-auto px-6 py-12 bg-[#D1D5BE]/60 backdrop-blur-md rounded-2xl shadow-xl text-center border border-white/20"
       >
         <h1 class="text-5xl font-extrabold text-[#2F4340] tracking-tight mb-3">
-          Our Services
+          Our Landscaping & Lawn Services
         </h1>
         <p class="text-[#2F4340]/80 font-medium max-w-lg mx-auto mb-2">
           Professional commercial and residential outdoor care across Terre Haute and the Wabash Valley.
@@ -64,10 +94,10 @@ const maintenanceService = {
               class="text-[#D9744B] font-bold hover:text-[#2F4340] duration-300">812-244-9432</a>
         </p>
 
-        <!-- Main Layout Split: Cascades from 2 columns to 1 at the xl breakpoint -->
+        <!-- Main Layout Split -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left w-full mx-auto items-start">
           
-          <!-- LEFT COLUMN: Items step down to 1 column at lg viewports before the main split collapses -->
+          <!-- LEFT COLUMN: Treatment and Program Offerings -->
           <div class="grid grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 gap-6">
             {treatmentServices.map((service) => (
               <div class="bg-white/40 border border-white/20 p-5 rounded-xl
@@ -85,13 +115,13 @@ const maintenanceService = {
             ))}
           </div>
 
-          <!-- RIGHT COLUMN: Height handles naturally, removing rigid full-scaling alignment constraints -->
+          <!-- RIGHT COLUMN: Routine & Multi-Season Care Packages -->
           <div class="bg-white/40 border border-white/20 p-6 rounded-xl
            hover:bg-white/60 hover:scale-[1.01] transition-all duration-300
            hover:border-[#2F4340]">
-              <h3 class="text-xl font-bold text-[#2F4340] mb-3">
+              <h2 class="text-xl font-bold text-[#2F4340] mb-3">
                   {maintenanceService.title}
-              </h3>
+              </h2>
               <p class="text-sm text-gray-700 leading-relaxed mb-4">
                   {maintenanceService.desc}
               </p>
@@ -99,9 +129,9 @@ const maintenanceService = {
               <ul class="space-y-4 border-l-2 border-[#2F4340]/20 pl-4 ml-2">
                 {maintenanceService.details.map((detail) => (
                   <li class="text-xs text-gray-700 leading-relaxed">
-                    <span class="font-semibold text-[#2F4340] block text-sm mb-0.5">
+                    <strong class="font-semibold text-[#2F4340] block text-sm mb-0.5">
                       {detail.split(':')[0]}:
-                    </span>
+                    </strong>
                     <span class="text-gray-600">
                       {detail.split(':')[1]}
                     </span>

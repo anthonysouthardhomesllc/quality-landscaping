@@ -1,31 +1,49 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import '../styles/global.css';
+import Layout from '@layouts/Layout.astro';
+import '@styles/global.css';
 import Container from "@components/container.astro";
 import { Image } from 'astro:assets';
 
 //Dynamically grab all images inside src/assets/gallery/ folder
 const imageModules = import.meta.glob<{ default: ImageMetadata }>('/src/assets/gallery/*.{jpeg,jpg,png,gif,webp}');
 
+//Resolve the files and append the structural filename context to use for dynamic SEO alt strings
 const galleryImages = await Promise.all(
-  Object.values(imageModules).map(async (loader) => {
+  Object.entries(imageModules).map(async ([filepath, loader]) => {
     const mod = await loader();
-    return mod.default;
+    
+    //Extract the raw filename without the extension and paths (e.g. "patios-design-terre-haute")
+    const filename = filepath.split('/').pop()?.split('.').shift() || "project";
+    
+    //Reformat filename dashes into readable spaces for human alt generation
+    const formattedAlt = filename
+      .replace(/[-_]/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+
+    return {
+      metadata: mod.default,
+      altText: `${formattedAlt} by Quality Landscape and Leisure`
+    };
   })
 );
+
+//Targeted SEO copy configuration suite
+const pageTitle = "Our Work Gallery | Quality Landscape & Leisure";
+const pageDescription = "Explore our commercial and residential portfolio featuring custom hardscapes, landscape lighting, and lawn maintenance throughout Terre Haute and the Wabash Valley.";
 ---
 
-<Layout title="Quality Landscape and Leisure Gallery">
+<Layout title={pageTitle} description={pageDescription}>
   <Container>
     <div id="container" class="py-16 md:py-24 text-center">
       <main>
+        
         <section id="hero" class="max-w-2xl mx-auto px-4 mb-12">
-            <div class="overflow-hidden rounded-2xl bg-[#D1D5BE]/80 p-12">
+            <div class="overflow-hidden rounded-2xl bg-[#D1D5BE]/80 p-8 md:p-12">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-[#2F4340] tracking-tight mb-4">
-                    Our Work Gallery
+                    Landscaping & Hardscaping Gallery
                 </h1>
-                <p class="text-gray-600 font-medium">
-                    A showcase of our premium landscapes, hardscapes, and outdoor living spaces.
+                <p class="text-slate-800 font-semibold max-w-md mx-auto leading-relaxed">
+                    A showcase of our premium outdoor living transformations, custom patios, and lawn care projects across the Wabash Valley.
                 </p>
             </div>
         </section>
@@ -33,21 +51,22 @@ const galleryImages = await Promise.all(
         <section class="max-w-6xl mx-auto px-4">
           <div id="my-gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {
-              galleryImages.map((img) => (
+              galleryImages.map((item) => (
                 <a 
-                  href={img.src}
-                  data-pswp-width={img.width}
-                  data-pswp-height={img.height}
+                  href={item.metadata.src}
+                  data-pswp-width={item.metadata.width}
+                  data-pswp-height={item.metadata.height}
                   target="_blank"
                   rel="noreferrer"
                   class="overflow-hidden rounded-2xl block
                   bg-white/40 border border-white/20 p-3 shadow-sm 
                   hover:shadow-md hover:scale-105
                   transition-all duration-300 group hover:bg-[#D1D5BE]/80 cursor-zoom-in"
+                  title={item.altText}
                 >
                   <Image 
-                    src={img} 
-                    alt="Quality Landscape project photo" 
+                    src={item.metadata} 
+                    alt={item.altText} 
                     widths={[240, 540, 720]}
                     sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
                     class="rounded-xl w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500 bg-slate-100"

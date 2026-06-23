@@ -1,11 +1,18 @@
 ---
+//src/pages/index.astro
 import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 import Container from "@components/container.astro";
+
+//Tailored homepage meta configurations for local ranking signals
+const homeMeta = {
+  title: "Landscaping Services & Hardscaping | Terre Haute, IN",
+  description: "Transform your outdoor space with Quality Landscape and Leisure. Serving Terre Haute and the Wabash Valley with premium landscaping, custom patios, and reliable lawn maintenance."
+};
 ---
 
-<Layout title="Landscaping services in Terre Haute, IN">
-	<Container>
-		<Welcome />
-	</Container>
+<Layout title={homeMeta.title} description={homeMeta.description}>
+  <Container>
+    <Welcome />
+  </Container>
 </Layout>

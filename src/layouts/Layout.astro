@@ -1,4 +1,7 @@
 ---
+//Layout.astro
+//Core layout wrapper handling site SEO, global styles, and shared shell components (Navbar/Footer)
+
 import { SEO } from "astro-seo";
 import FooterContent from "@components/footer.astro";
 import Navbar from "@components/navbar/navbar.astro";
@@ -8,33 +11,47 @@ import '../styles/global.css';
 export interface Props {
   title: string;
   description?: string;
+  canonical?: string;
 }
 
-const { title, description = "Quality Landscaping LLC provides premium residential and commercial landscaping, lawn care, and hardscaping services across Terre Haute and the Wabash Valley." } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+//Component Props & Fallbacks
+const { 
+  title, 
+  description = "Quality Landscape and Leisure provides premium residential and commercial landscaping, lawn care, and custom hardscaping services across Terre Haute and the Wabash Valley.",
+  canonical
+} = Astro.props;
+
+//URL Management for Search & Social Networks
+//Automatically generates absolute links based on your production 'site' URL configuration
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).toString();
 const resolvedImageWithDomain = new URL("/opengraph.jpg", Astro.site).toString();
 
+//Dynamic Title Formatting
+//Prevents duplicating the business name if a page explicitly includes it (e.g., in the gallery)
+const isBrandAppended = title.includes("Quality Landscape");
 const makeTitle = title
-  ? `${title} | Quality Landscaping LLC`
-  : "Quality Landscaping LLC | Landscaping Services in Terre Haute, Indiana"; 
+  ? (isBrandAppended ? title : `${title} | Quality Landscape & Leisure`)
+  : "Quality Landscape and Leisure | Landscaping Services in Terre Haute, Indiana"; 
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Base Browser Meta -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <link rel="icon" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Search Engine & Open Graph Optimization Wrapper -->
     <SEO
       title={makeTitle}
       description={description}
       canonical={canonicalURL}
       twitter={{ 
-        creator: "@qualitylandscapingllc",
-        site: "",
+        creator: "@qualitylandscapeandleisure",
+        site: "qualitylandscapeandleisure.com",
         card: "summary_large_image",
       }}
       openGraph={{
@@ -45,7 +62,7 @@ const makeTitle = title
           image: resolvedImageWithDomain,
         },
         image: {
-          alt: "Quality Landscaping LLC - Terre Haute, IN",
+          alt: "Quality Landscape and Leisure - Terre Haute, IN",
         },
       }}
     />
@@ -53,21 +70,24 @@ const makeTitle = title
 
   <body class="flex flex-col min-h-screen relative overflow-x-hidden">
     
+    <!-- Visual Enhancements: Global Full-Bleed Fixed Background -->
+    <!-- Performance Optimization: content-visibility updates rendering performance during glassmorphism scrolling -->
     <div 
       class="fixed inset-0 pointer-events-none 
       bg-fixed bg-center bg-cover bg-no-repeat blur-[0px] scale-105 z-0"
-      style={`background-image: url('${background.src}');`}
+      style={`background-image: url('${background.src}'); content-visibility: auto;`}
     ></div>
 
+    <!-- UI Composition Container (Keeps footer pinned cleanly on shorter pages) -->
     <div class="relative z-10 flex flex-col min-h-screen grow">
       <Navbar />
       
+      <!-- Primary Page Content Area -->
       <main class="grow">
         <slot />
       </main>
 
       <FooterContent />
     </div>
-
   </body>
 </html>

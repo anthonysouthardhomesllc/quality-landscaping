@@ -50,14 +50,15 @@ const menuitems: Array<{ title: string; path: string; children?: Array<{ title: 
               src={logoImg}
               width={80}
               height={80}
-              class="h-20 w-auto object-contain brightness-115 rounded-full opacity-80" 
+              class="h-20 w-auto object-contain brightness-115 rounded-full opacity-80 hover:border-2 hover:border-[#2F4340]" 
               alt="Quality Landscape and Leisure Logo" 
               id="logo"
               loading="eager" 
             />
           </a>
           <div class="block lg:hidden">
-            <MenuIcon class="w-8 h-8 text-[#2F4340] hover:text-[#2F4340] transition-colors" />
+            <MenuIcon class="w-8 h-8 text-[#2F4340] hover:text-[#D9744B] 
+              transition-colors cursor-pointer duration-300" />
           </div>
         </div>
         
@@ -92,15 +93,7 @@ const menuitems: Array<{ title: string; path: string; children?: Array<{ title: 
             </ul>
           </nav>
         </MenuItems>
-          
       </Astronav>
     </header>
   </div>
 </div>
-
-<style>
-  #logo-link:hover #logo {
-    border-color: #2F4340;
-    border-width: 2px;
-  }
-</style>

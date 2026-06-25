@@ -113,7 +113,11 @@ const homeSchema = JSON.stringify({
             { title: "Property Maintenance", desc: "Routine mowing, seasonal cleanups & commercial care." },
             { title: "Outdoor Leisure", desc: "Landscape lighting, fire pits & outdoor entertainment design." }
           ].map(service => (
-            <div class="bg-[#D1D5BE] backdrop-blur-md p-6 rounded-2xl border border-white/40 shadow-sm text-left flex flex-col justify-between">
+            <div class="bg-white/50 backdrop-blur-sm p-6 
+              rounded-2xl border border-white/40 shadow-sm text-left 
+              flex flex-col justify-between
+              transition-all duration-300
+              hover:-translate-y-2 hover:shadow-xl hover:bg-white/70">
               <div>
                 <h3 class="text-xl font-bold text-[#2F4340] mb-2">{service.title}</h3>
                 <p class="text-sm text-slate-600 font-medium">{service.desc}</p>
